@@ -67,7 +67,9 @@ round(prop.table(table(data$Q02)) * 100, 1)
 ### plot
 ggplot(data = data) + 
     geom_bar(aes(x = Q02)) + 
-    labs(list(title = questions[2], x = "", y = "members"))
+    labs(list(title = questions[2], x = "", y = "members")) + 
+    coord_flip() + 
+    theme_bw()
 
 ## Q06: Group meetings would be most interesting for me if...
 ### unpack list of multiple answers and make pretty
@@ -86,7 +88,8 @@ ggplot(data = q06) +
     geom_bar(aes(x = reorder(q, freq), y = freq), 
              stat = "identity") + 
     labs(list(title = questions[6], x = "", y = "mentions")) + 
-    coord_flip()
+    coord_flip() + 
+    theme_bw()
 
 ## member stats
 ggplot(data = stats) + 
@@ -107,4 +110,5 @@ ggplot(data = stats) +
               size = 4) + 
     geom_point(aes(x = date, y = members), 
                data = maxMembers, 
-               size = 3)
+               size = 3) + 
+    theme_bw()
