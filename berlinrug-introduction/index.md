@@ -19,8 +19,8 @@ Time|What's happening
 -------|-------
 19:00|doors open
 19:30|Konstantin Greger ([@kogreger](https://twitter.com/kogreger)): "Welcome address and brief group introduction"
-~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis""
-~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals""
+~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis"
+~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals"
 afterwards|socializing & networking
 22:00|doors close
 
@@ -49,115 +49,171 @@ afterwards|socializing & networking
 
 ## Ratio of meetup attendance registration
 
-![plot of chunk attendanceStats](assets/fig/attendanceStats-1.png) 
+
+
+#### (Source: meetup.com, current number of group members = ``177``)
+
+![plot of chunk attendanceStatsB](assets/fig/attendanceStatsB-1.png) 
 
 --- .class #id
 
-## Survey - I'd go to a group meeting
+## "I'd go to a group meeting""
 
-![plot of chunk surveyQ05](assets/fig/surveyQ05-1.png) 
 
---- .class #id
 
-## Survey - I would present something myself one day
+#### (Source: BerlinRUG member survey, n = ``34``)
 
-![plot of chunk surveyQ07](assets/fig/surveyQ07-1.png) 
+![plot of chunk surveyQ05B](assets/fig/surveyQ05B-1.png) 
 
 --- .class #id
 
-## Survey - I'd like to have the talks at the meetings be recorded
+## "I would present something myself one day"
 
-![plot of chunk surveyQ09](assets/fig/surveyQ09-1.png) 
 
---- .class #id
 
-## Survey - I'd like to have the talks at the meetings be live streamed
+#### (Source: BerlinRUG member survey, n = ``33``)
 
-![plot of chunk surveyQ10](assets/fig/surveyQ10-1.png) 
+![plot of chunk surveyQ07B](assets/fig/surveyQ07B-1.png) 
 
 --- .class #id
 
-## Survey - Group meetings would work best for me on ...
+## "I'd like to have the talks at the meetings be recorded"
 
-![plot of chunk surveyQ11](assets/fig/surveyQ11-1.png) 
 
---- .class #id
 
-## Survey - Group meeting should start ...
+#### (Source: BerlinRUG member survey, n = ``31``)
 
-![plot of chunk surveyQ12](assets/fig/surveyQ12-1.png) 
+![plot of chunk surveyQ09B](assets/fig/surveyQ09B-1.png) 
 
 --- .class #id
 
-## Survey - Group meetings should be ...
+## "I'd like to have the talks at the meetings be live streamed"
 
-![plot of chunk surveyQ13](assets/fig/surveyQ13-1.png) 
 
---- .class #id
 
-## Survey - Group meetings would be most interesting for me if ...
+#### (Source: BerlinRUG member survey, n = ``30``)
 
-![plot of chunk surveyQ06](assets/fig/surveyQ06-1.png) 
+![plot of chunk surveyQ10B](assets/fig/surveyQ10B-1.png) 
 
 --- .class #id
 
-## Survey - My field of work/research
+## "Group meetings would work best for me on ..."
 
-![plot of chunk surveyQ21](assets/fig/surveyQ21-1.png) 
 
---- .class #id
 
-## Survey - I'm ...
+#### (Source: BerlinRUG member survey, n = ``30``)
 
-![plot of chunk surveyQ20](assets/fig/surveyQ20-1.png) 
+![plot of chunk surveyQ11B](assets/fig/surveyQ11B-1.png) 
 
 --- .class #id
 
-## Survey - I'm using R ...
+## "Group meeting should start ..."
 
-![plot of chunk surveyQ03](assets/fig/surveyQ03-1.png) 
+
+
+#### (Source: BerlinRUG member survey, n = ``33``)
+
+![plot of chunk surveyQ12B](assets/fig/surveyQ12B-1.png) 
+
+--- .class #id
+
+## "Group meetings should be ..."
+
+
+
+#### (Source: BerlinRUG member survey, n = ``31``)
+
+![plot of chunk surveyQ13B](assets/fig/surveyQ13B-1.png) 
+
+--- .class #id
+
+## "Group meetings would be most interesting for me if ..."
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ06B](assets/fig/surveyQ06B-1.png) 
+
+--- .class #id
+
+## "My field of work/research"
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ21B](assets/fig/surveyQ21B-1.png) 
+
+--- .class #id
+
+## "I'm ..."
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ20B](assets/fig/surveyQ20B-1.png) 
+
+--- .class #id
+
+## "I'm using R ..."
+
+
+
+#### (Source: BerlinRUG member survey, n = ``33``)
+
+![plot of chunk surveyQ03B](assets/fig/surveyQ03B-1.png) 
 
 --- .class #id 
 
-## Survey - My R proficiency level
+## "My R proficiency level"
 
-![plot of chunk surveyQ02](assets/fig/surveyQ02-1.png) 
 
---- .class #id
 
-## Survey - My gender
+#### (Source: BerlinRUG member survey, n = ``34``)
 
-![plot of chunk surveyQ17](assets/fig/surveyQ17-1.png) 
+![plot of chunk surveyQ02B](assets/fig/surveyQ02B-1.png) 
 
 --- .class #id
 
-## Survey - My age
+## "My highest degree"
 
-![plot of chunk surveyQ18](assets/fig/surveyQ18-1.png) 
 
---- .class #id
 
-## Survey - My highest degree
+#### (Source: BerlinRUG member survey, n = ``34``)
 
-![plot of chunk surveyQ19](assets/fig/surveyQ19-1.png) 
+![plot of chunk surveyQ19B](assets/fig/surveyQ19B-1.png) 
 
 --- .class #id
 
-## Survey - My english proficiency
+## "My english proficiency"
 
-![plot of chunk surveyQ22](assets/fig/surveyQ22-1.png) 
 
---- .class #id
 
-## Survey - My other language skills
+#### (Source: BerlinRUG member survey, n = ``33``)
 
-![plot of chunk surveyQ23](assets/fig/surveyQ23-1.png) 
+![plot of chunk surveyQ22B](assets/fig/surveyQ22B-1.png) 
 
 --- .class #id
 
-## Survey - I have been living in Berlin ...
+## "My other language skills"
 
-![plot of chunk surveyQ24](assets/fig/surveyQ24-1.png) 
+
+
+#### (Source: BerlinRUG member survey, n = ``31``)
+
+![plot of chunk surveyQ23B](assets/fig/surveyQ23B-1.png) 
+
+--- .class #id
+
+## "I have been living in Berlin ..."
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ24B](assets/fig/surveyQ24B-1.png) 
 
 --- .class #id
 
@@ -168,18 +224,20 @@ afterwards|socializing & networking
 
 --- .class #id 
 
-## Start
-##### (image credit: [Dirk Vorderstraße on Flickr](https://flic.kr/p/h8fWVM))
-
-![plot of chunk startImage](assets/fig/startImage-1.png) 
-
---- .class #id 
-
 ## Contact
 
 * Group website on Meetup.com: [http://www.meetup.com/Berlin-R-Users-Group/](http://www.meetup.com/Berlin-R-Users-Group/)
 * Twitter: [@BerlinRUG](https://twitter.com/berlinrug)
 * Konstantin: [@kogreger](https://twitter.com/kogreger) or [kogreger@gmail.com](mailto:kogreger@gmail.com)
+* Member Survey: [http://bit.ly/BerlinRUG_Member_Survey](http://bit.ly/BerlinRUG_Member_Survey) (so far 46 hits, 34 submitted)
+* These slides are available on my [GitHub repository ```berlinrug_introduction```](https://github.com/kogreger/berlinrug_introduction)
+
+--- .class #id 
+
+## Start
+##### (image credit: [Dirk Vorderstraße on Flickr](https://flic.kr/p/h8fWVM))
+
+![plot of chunk startImage](assets/fig/startImage-1.png) 
 
 --- .class #id 
 
@@ -189,7 +247,31 @@ Time|What's happening
 -------|-------
 19:00|doors open
 19:30|Konstantin Greger ([@kogreger](https://twitter.com/kogreger)): "Welcome address and brief group introduction"
-~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis""
-~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals""
+~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis"
+~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals"
 afterwards|socializing & networking
 22:00|doors close
+
+--- .class #id 
+
+## Backup slides
+
+--- .class #id
+
+## "My gender"
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ17B](assets/fig/surveyQ17B-1.png) 
+
+--- .class #id
+
+## "My age"
+
+
+
+#### (Source: BerlinRUG member survey, n = ``34``)
+
+![plot of chunk surveyQ18B](assets/fig/surveyQ18B-1.png) 

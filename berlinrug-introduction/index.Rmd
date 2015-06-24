@@ -19,13 +19,14 @@ Time|What's happening
 -------|-------
 19:00|doors open
 19:30|Konstantin Greger ([@kogreger](https://twitter.com/kogreger)): "Welcome address and brief group introduction"
-~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis""
-~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals""
+~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis"
+~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals"
 afterwards|socializing & networking
 22:00|doors close
 
-```{r initialize, echo = FALSE, message = FALSE}
+```{r initialize, echo = FALSE, message = FALSE, cache = FALSE}
 # initialize libraries
+suppressMessages(library(slidify))
 suppressMessages(library(googlesheets))
 suppressMessages(library(ggplot2))
 suppressMessages(library(grid))
@@ -107,14 +108,14 @@ milestones <- data.frame(
 
 *** =left
 
-```{r leftSponsor, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r leftSponsor, echo = FALSE, cache = FALSE, fig.width = 6, fig.height = 6}
 img <- readJPEG("./assets/img/RAlogo.jpg")
 grid.raster(img)
 ```
 
 *** =right
 
-```{r rightSponsor, echo = FALSE, fig.width = 6, fig.height = 6}
+```{r rightSponsor, echo = FALSE, cache = FALSE, fig.width = 6, fig.height = 6}
 img <- readPNG("./assets/img/MSlogo.png")
 grid.raster(img)
 ```
@@ -124,7 +125,7 @@ grid.raster(img)
 
 ## Number of group members
 
-```{r groupStats, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, dev.args = list(bg = 'transparent')}
+```{r groupStats, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, dev.args = list(bg = 'transparent')}
 ## member stats
 ggplot(data = memberStats) + 
     geom_line(aes(x = date, 
@@ -154,19 +155,31 @@ ggplot(data = memberStats) +
     theme(panel.border = element_blank(), 
           plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
-          legend.key = element_rect(color = NA))
+          legend.key = element_rect(color = NA), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id 
 
 ## Ratio of meetup attendance registration
 
-```{r attendanceStats, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r attendanceStatsA, echo = FALSE, message = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## attendance stats
 ## (unfortunately the number of attendees needs to be entered and updated 
 ##  manually)
-attendees <- 78
-totalMembers <- tail(stats, 1)$totalMembers
+attendees <- 97
+totalMembers <- memberStats %>% 
+    filter(status == "total") %>% 
+    arrange(desc(date)) %>% 
+    top_n(n = 1) %>% 
+    select(members) %>% 
+    collect %>% 
+    .[["members"]]
+```
+
+#### (Source: meetup.com, current number of group members = ```r totalMembers```)
+
+```{r attendanceStatsB, echo = FALSE, message = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 attendeeStats <- data.frame(
     status = factor(c("attending", 
                       "not attending"), 
@@ -191,10 +204,12 @@ ggplot(data = attendeeStats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", totalMembers))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -202,16 +217,22 @@ ggplot(data = attendeeStats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - I'd go to a group meeting
+## "I'd go to a group meeting""
 
-```{r surveyQ05, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ05A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q05: I'd go to a group meeting
 n <- sum(!is.na(survey$Q05))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ05B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q05Stats <- data.frame(
     status = factor(c("yes", 
                       "maybe", 
@@ -239,10 +260,12 @@ ggplot(data = q05Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -250,16 +273,22 @@ ggplot(data = q05Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - I would present something myself one day
+## "I would present something myself one day"
 
-```{r surveyQ07, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ07A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q07: I would present something myself one day
 n <- sum(!is.na(survey$Q07))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ07B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q07Stats <- data.frame(
     status = factor(c("yes", 
                       "no"), 
@@ -284,10 +313,12 @@ ggplot(data = q07Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -295,16 +326,22 @@ ggplot(data = q07Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - I'd like to have the talks at the meetings be recorded
+## "I'd like to have the talks at the meetings be recorded"
 
-```{r surveyQ09, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ09A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q09: I'd like to have the talks at the meetings be recorded
 n <- sum(!is.na(survey$Q09))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ09B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q09Stats <- data.frame(
     status = factor(c("yes", 
                       "no"), 
@@ -329,10 +366,12 @@ ggplot(data = q09Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -340,16 +379,22 @@ ggplot(data = q09Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - I'd like to have the talks at the meetings be live streamed
+## "I'd like to have the talks at the meetings be live streamed"
 
-```{r surveyQ10, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ10A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q10: I'd like to have the talks at the meetings be live streamed
 n <- sum(!is.na(survey$Q10))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ10B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q10Stats <- data.frame(
     status = factor(c("yes", 
                       "no"), 
@@ -374,10 +419,12 @@ ggplot(data = q10Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -385,18 +432,24 @@ ggplot(data = q10Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - Group meetings would work best for me on ...
+## "Group meetings would work best for me on ..."
 
-```{r surveyQ11, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ11A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q11: Group meetings would work best for me on ...
 n <- sum(!is.na(survey$Q11))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ11B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## multiple choices have to be accounted for
-q11Stats <- unlist(strsplit(data$Q11, split=", ")) %>% 
+q11Stats <- unlist(strsplit(survey$Q11, split=", ")) %>% 
     table() %>% 
     as.data.frame()
 names(q11Stats) <- c("status", "count")
@@ -409,11 +462,13 @@ ggplot(data = q11Stats) +
              stat = "identity") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     coord_flip() + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.ticks.y = element_blank(), 
@@ -423,11 +478,16 @@ ggplot(data = q11Stats) +
 
 --- .class #id
 
-## Survey - Group meeting should start ...
+## "Group meeting should start ..."
 
-```{r surveyQ12, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ12A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q12: Group meeting should start ...
 n <- sum(!is.na(survey$Q12))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ12B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q12Stats <- data.frame(
     status = factor(c("... around 5pm", 
                       "... around 6pm", 
@@ -464,10 +524,12 @@ ggplot(data = q12Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -475,16 +537,22 @@ ggplot(data = q12Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - Group meetings should be ...
+## "Group meetings should be ..."
 
-```{r surveyQ13, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ13A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q13: Group meetings should be ...
 n <- sum(!is.na(survey$Q13))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ13B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q13Stats <- data.frame(
     status = factor(c("... weekly", 
                       "... bi-weekly", 
@@ -518,10 +586,12 @@ ggplot(data = q13Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -529,18 +599,24 @@ ggplot(data = q13Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - Group meetings would be most interesting for me if ...
+## "Group meetings would be most interesting for me if ..."
 
-```{r surveyQ06, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ06A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q06: Group meetings would be most interesting for me if ...
 n <- sum(!is.na(survey$Q06))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ06B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## multiple choices have to be accounted for
-q06Stats <- unlist(strsplit(data$Q06, split=", ")) %>% 
+q06Stats <- unlist(strsplit(survey$Q06, split=", ")) %>% 
     table() %>% 
     as.data.frame()
 names(q06Stats) <- c("status", "count")
@@ -553,11 +629,13 @@ ggplot(data = q06Stats) +
              stat = "identity") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     coord_flip() + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.ticks.y = element_blank(), 
@@ -567,13 +645,18 @@ ggplot(data = q06Stats) +
 
 --- .class #id
 
-## Survey - My field of work/research
+## "My field of work/research"
 
-```{r surveyQ21, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ21A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q21: My field of work/research
 n <- sum(!is.na(survey$Q21))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ21B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## multiple choices have to be accounted for
-q21Stats <- unlist(strsplit(data$Q21, split=", ")) %>% 
+q21Stats <- unlist(strsplit(survey$Q21, split=", ")) %>% 
     table() %>% 
     as.data.frame()
 names(q21Stats) <- c("status", "count")
@@ -586,11 +669,13 @@ ggplot(data = q21Stats) +
              stat = "identity") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     coord_flip() + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.ticks.y = element_blank(), 
@@ -600,11 +685,16 @@ ggplot(data = q21Stats) +
 
 --- .class #id
 
-## Survey - I'm ...
+## "I'm ..."
 
-```{r surveyQ20, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ20A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q20: I'm ...
 n <- sum(!is.na(survey$Q20))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ20B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q20Stats <- data.frame(
     status = factor(c("... an employee", 
                       "... self-employed", 
@@ -638,10 +728,12 @@ ggplot(data = q20Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -649,18 +741,24 @@ ggplot(data = q20Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - I'm using R ...
+## "I'm using R ..."
 
-```{r surveyQ03, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ03A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q03: I'm using R ...
 n <- sum(!is.na(survey$Q03))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ03B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## multiple choices have to be accounted for
-q03Stats <- unlist(strsplit(data$Q03, split=", ")) %>% 
+q03Stats <- unlist(strsplit(survey$Q03, split=", ")) %>% 
     table() %>% 
     as.data.frame()
 names(q03Stats) <- c("status", "count")
@@ -673,11 +771,13 @@ ggplot(data = q03Stats) +
              stat = "identity") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     coord_flip() + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.ticks.y = element_blank(), 
@@ -687,11 +787,16 @@ ggplot(data = q03Stats) +
 
 --- .class #id 
 
-## Survey - My R proficiency level
+## "My R proficiency level"
 
-```{r surveyQ02, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ02, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q02: My R proficiency level
 n <- sum(!is.na(survey$Q02))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ02B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q02Stats <- data.frame(
     status = factor(c("absolute pro", 
                       "advanced", 
@@ -725,10 +830,12 @@ ggplot(data = q02Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -736,16 +843,313 @@ ggplot(data = q02Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - My gender
+## "My highest degree"
 
-```{r surveyQ17, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ19A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+## Q19: My highest degree
+n <- sum(!is.na(survey$Q19))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ19B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+q19Stats <- data.frame(
+    status = factor(c("none", 
+                      "high-school", 
+                      "undergraduate", 
+                      "graduate", 
+                      "PhD", 
+                      "Other"), 
+                    levels = c("none", 
+                               "high-school", 
+                               "undergraduate", 
+                               "graduate", 
+                               "PhD", 
+                               "Other")), 
+    ratio = c(sum(survey$Q19 == "none", na.rm = TRUE) / n, 
+              sum(survey$Q19 == "high-school", na.rm = TRUE) / n, 
+              sum(survey$Q19 == "undergraduate", na.rm = TRUE) / n, 
+              sum(survey$Q19 == "graduate", na.rm = TRUE) / n, 
+              sum(survey$Q19 == "PhD", na.rm = TRUE) / n, 
+              sum(survey$Q19 == "Other", na.rm = TRUE) / n)
+) %>% 
+    mutate(pos = cumsum(ratio)- ratio / 2)
+ggplot(data = q19Stats) + 
+    geom_bar(aes(x = factor(1), 
+                 y = ratio, 
+                 fill = factor(status)), 
+             stat = "identity", 
+             width = 1) + 
+    scale_fill_brewer(palette = "Set1") + 
+    geom_text(aes(x = factor(1), 
+                  y = pos, 
+                  label = paste0(round(ratio * 100, 0), "%")), 
+              size = 8, 
+              color = "white") + 
+    coord_polar(theta="y") + 
+    labs(list(x = "", 
+              y = "", 
+              fill = "")) + 
+    theme_bw(base_size = 25) + 
+    theme(plot.background = element_rect(fill = "transparent", 
+                                         color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
+          panel.border = element_blank(), 
+          panel.grid.major = element_blank(), 
+          axis.line = element_blank(), 
+          axis.text.x = element_blank(), 
+          axis.text.y = element_blank(), 
+          axis.ticks = element_blank(), 
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
+```
+
+--- .class #id
+
+## "My english proficiency"
+
+```{r surveyQ22A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+## Q22: My english proficiency
+n <- sum(!is.na(survey$Q22))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ22B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+q22Stats <- data.frame(
+    status = factor(c("none", 
+                      "basic", 
+                      "intermediate", 
+                      "advanced", 
+                      "fluent / native"), 
+                    levels = c("none", 
+                      "basic", 
+                      "intermediate", 
+                      "advanced", 
+                      "fluent / native")), 
+    ratio = c(sum(survey$Q22 == "none (how did you make it that far in the questionnaire?)", na.rm = TRUE) / n, 
+              sum(survey$Q22 == "basic", na.rm = TRUE) / n, 
+              sum(survey$Q22 == "intermediate", na.rm = TRUE) / n, 
+              sum(survey$Q22 == "advanced", na.rm = TRUE) / n, 
+              sum(survey$Q22 == "fluent / native", na.rm = TRUE) / n)
+) %>% 
+    mutate(pos = cumsum(ratio)- ratio / 2)
+ggplot(data = q22Stats) + 
+    geom_bar(aes(x = factor(1), 
+                 y = ratio, 
+                 fill = factor(status)), 
+             stat = "identity", 
+             width = 1) + 
+    scale_fill_brewer(palette = "Set1") + 
+    geom_text(aes(x = factor(1), 
+                  y = pos, 
+                  label = paste0(round(ratio * 100, 0), "%")), 
+              size = 8, 
+              color = "white") + 
+    coord_polar(theta="y") + 
+    labs(list(x = "", 
+              y = "", 
+              fill = "")) + 
+    theme_bw(base_size = 25) + 
+    theme(plot.background = element_rect(fill = "transparent", 
+                                         color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
+          panel.border = element_blank(), 
+          panel.grid.major = element_blank(), 
+          axis.line = element_blank(), 
+          axis.text.x = element_blank(), 
+          axis.text.y = element_blank(), 
+          axis.ticks = element_blank(), 
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
+```
+
+--- .class #id
+
+## "My other language skills"
+
+```{r surveyQ23A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+## Q23: My other language skills
+n <- sum(!is.na(survey$Q23))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ23B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+## multiple choices have to be accounted for
+q23Stats <- unlist(strsplit(survey$Q23, split=", ")) %>% 
+    table() %>% 
+    as.data.frame()
+names(q23Stats) <- c("status", "count")
+q23Stats$status <- factor(q23Stats$status, 
+                          levels = q23Stats$status)
+ggplot(data = q23Stats) + 
+    geom_bar(aes(x = reorder(status, count), 
+                 y = count, 
+                 fill = factor(status)), 
+             stat = "identity") + 
+    labs(list(x = "", 
+              y = "", 
+              fill = "")) + 
+    coord_flip() + 
+    theme_bw(base_size = 25) + 
+    theme(plot.background = element_rect(fill = "transparent", 
+                                         color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
+          panel.border = element_blank(), 
+          panel.grid.major = element_blank(), 
+          axis.ticks.y = element_blank(), 
+          axis.title.y = element_blank(), 
+          legend.position="none")
+```
+
+--- .class #id
+
+## "I have been living in Berlin ..."
+
+```{r surveyQ24A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+## Q24: I have been living in Berlin ...
+n <- sum(!is.na(survey$Q24))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ24B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+q24Stats <- data.frame(
+    status = factor(c("... since I was born", 
+                      "... more than five years now", 
+                      "... less than five but more than a year now", 
+                      "... less than a year", 
+                      "... I only just arrived", 
+                      "Other"), 
+                    levels = c("... since I was born", 
+                               "... more than five years now", 
+                               "... less than five but more than a year now", 
+                               "... less than a year", 
+                               "... I only just arrived", 
+                               "Other")), 
+    ratio = c(sum(survey$Q24 == "... since I was born", na.rm = TRUE) / n, 
+              sum(survey$Q24 == "... more than five years now", na.rm = TRUE) / n, 
+              sum(survey$Q24 == "... less than five but more than a year now", na.rm = TRUE) / n, 
+              sum(survey$Q24 == "... less than a year", na.rm = TRUE) / n, 
+              sum(survey$Q24 == "... I only just arrived", na.rm = TRUE) / n, 
+              sum(survey$Q24 == "Other", na.rm = TRUE) / n)
+) %>% 
+    mutate(pos = cumsum(ratio)- ratio / 2)
+ggplot(data = q24Stats) + 
+    geom_bar(aes(x = factor(1), 
+                 y = ratio, 
+                 fill = factor(status)), 
+             stat = "identity", 
+             width = 1) + 
+    scale_fill_brewer(palette = "Set1") + 
+    geom_text(aes(x = factor(1), 
+                  y = pos, 
+                  label = paste0(round(ratio * 100, 0), "%")), 
+              size = 8, 
+              color = "white") + 
+    coord_polar(theta="y") + 
+    labs(list(x = "", 
+              y = "", 
+              fill = "")) + 
+    theme_bw(base_size = 25) + 
+    theme(plot.background = element_rect(fill = "transparent", 
+                                         color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
+          panel.border = element_blank(), 
+          panel.grid.major = element_blank(), 
+          axis.line = element_blank(), 
+          axis.text.x = element_blank(), 
+          axis.text.y = element_blank(), 
+          axis.ticks = element_blank(), 
+          axis.title.x = element_blank(), 
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
+```
+
+--- .class #id
+
+## You are the group - the group is you!
+##### (image credit: [Peter O'Connor aka anemoneprojectors on Flickr](https://flic.kr/p/9GEQsk))
+
+```{r groupImage, echo = FALSE, message = FALSE, cache = FALSE, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+jpegUrl <- "https://farm3.staticflickr.com/2588/5711091239_edae823037_o_d.jpg"
+tf <- tempfile()
+download.file(jpegUrl, 
+              tf, 
+              method = "curl")
+img <- readJPEG(tf)
+grid.raster(img)
+invisible(file.remove(tf))
+```
+
+--- .class #id 
+
+## Contact
+
+* Group website on Meetup.com: [http://www.meetup.com/Berlin-R-Users-Group/](http://www.meetup.com/Berlin-R-Users-Group/)
+* Twitter: [@BerlinRUG](https://twitter.com/berlinrug)
+* Konstantin: [@kogreger](https://twitter.com/kogreger) or [kogreger@gmail.com](mailto:kogreger@gmail.com)
+* Member Survey: [http://bit.ly/BerlinRUG_Member_Survey](http://bit.ly/BerlinRUG_Member_Survey) (so far 46 hits, 34 submitted)
+* These slides are available on my [GitHub repository ```berlinrug_introduction```](https://github.com/kogreger/berlinrug_introduction)
+
+--- .class #id 
+
+## Start
+##### (image credit: [Dirk Vorderstraße on Flickr](https://flic.kr/p/h8fWVM))
+
+```{r startImage, echo = FALSE, message = FALSE, cache = FALSE, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+jpegUrl <- "https://farm4.staticflickr.com/3698/10583840103_c656504a75_b_d.jpg"
+tf <- tempfile()
+download.file(jpegUrl, 
+              tf, 
+              method = "curl")
+img <- readJPEG(tf)
+grid.raster(img)
+invisible(file.remove(tf))
+```
+
+--- .class #id 
+
+## Schedule for today
+
+Time|What's happening
+-------|-------
+19:00|doors open
+19:30|Konstantin Greger ([@kogreger](https://twitter.com/kogreger)): "Welcome address and brief group introduction"
+~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis"
+~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals"
+afterwards|socializing & networking
+22:00|doors close
+
+--- .class #id 
+
+## Backup slides
+
+--- .class #id
+
+## "My gender"
+
+```{r surveyQ17A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q17: My gender
 n <- sum(!is.na(survey$Q17))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ17B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q17Stats <- data.frame(
     status = factor(c("female", 
                       "male", 
@@ -773,10 +1177,12 @@ ggplot(data = q17Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -784,16 +1190,22 @@ ggplot(data = q17Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
+          axis.title.y = element_blank(), 
+          legend.key.size = unit(2, "lines"))
 ```
 
 --- .class #id
 
-## Survey - My age
+## "My age"
 
-```{r surveyQ18, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
+```{r surveyQ18A, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 ## Q18: My age
 n <- sum(!is.na(survey$Q18))
+```
+
+#### (Source: BerlinRUG member survey, n = ```r n```)
+
+```{r surveyQ18B, echo = FALSE, cache = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
 q18Stats <- data.frame(
     status = factor(c("(0, 18)", 
                       "[18, 25)", 
@@ -833,10 +1245,12 @@ ggplot(data = q18Stats) +
     coord_polar(theta="y") + 
     labs(list(x = "", 
               y = "", 
-              fill = paste0("n = ", n))) + 
+              fill = "")) + 
     theme_bw(base_size = 25) + 
     theme(plot.background = element_rect(fill = "transparent", 
                                          color = NA), 
+          panel.background = element_rect(fill = "transparent", 
+                                          color = NA), 
           panel.border = element_blank(), 
           panel.grid.major = element_blank(), 
           axis.line = element_blank(), 
@@ -844,259 +1258,6 @@ ggplot(data = q18Stats) +
           axis.text.y = element_blank(), 
           axis.ticks = element_blank(), 
           axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
-```
-
---- .class #id
-
-## Survey - My highest degree
-
-```{r surveyQ19, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-## Q19: My highest degree
-n <- sum(!is.na(survey$Q19))
-q19Stats <- data.frame(
-    status = factor(c("none", 
-                      "high-school", 
-                      "undergraduate", 
-                      "graduate", 
-                      "PhD", 
-                      "Other"), 
-                    levels = c("none", 
-                               "high-school", 
-                               "undergraduate", 
-                               "graduate", 
-                               "PhD", 
-                               "Other")), 
-    ratio = c(sum(survey$Q19 == "none", na.rm = TRUE) / n, 
-              sum(survey$Q19 == "high-school", na.rm = TRUE) / n, 
-              sum(survey$Q19 == "undergraduate", na.rm = TRUE) / n, 
-              sum(survey$Q19 == "graduate", na.rm = TRUE) / n, 
-              sum(survey$Q19 == "PhD", na.rm = TRUE) / n, 
-              sum(survey$Q19 == "Other", na.rm = TRUE) / n)
-) %>% 
-    mutate(pos = cumsum(ratio)- ratio / 2)
-ggplot(data = q19Stats) + 
-    geom_bar(aes(x = factor(1), 
-                 y = ratio, 
-                 fill = factor(status)), 
-             stat = "identity", 
-             width = 1) + 
-    scale_fill_brewer(palette = "Set1") + 
-    geom_text(aes(x = factor(1), 
-                  y = pos, 
-                  label = paste0(round(ratio * 100, 0), "%")), 
-              size = 8, 
-              color = "white") + 
-    coord_polar(theta="y") + 
-    labs(list(x = "", 
-              y = "", 
-              fill = paste0("n = ", n))) + 
-    theme_bw(base_size = 25) + 
-    theme(plot.background = element_rect(fill = "transparent", 
-                                         color = NA), 
-          panel.border = element_blank(), 
-          panel.grid.major = element_blank(), 
-          axis.line = element_blank(), 
-          axis.text.x = element_blank(), 
-          axis.text.y = element_blank(), 
-          axis.ticks = element_blank(), 
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
-```
-
---- .class #id
-
-## Survey - My english proficiency
-
-```{r surveyQ22, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-## Q22: My english proficiency
-n <- sum(!is.na(survey$Q22))
-q22Stats <- data.frame(
-    status = factor(c("none", 
-                      "basic", 
-                      "intermediate", 
-                      "advanced", 
-                      "fluent / native"), 
-                    levels = c("none", 
-                      "basic", 
-                      "intermediate", 
-                      "advanced", 
-                      "fluent / native")), 
-    ratio = c(sum(survey$Q22 == "none (how did you make it that far in the questionnaire?)", na.rm = TRUE) / n, 
-              sum(survey$Q22 == "basic", na.rm = TRUE) / n, 
-              sum(survey$Q22 == "intermediate", na.rm = TRUE) / n, 
-              sum(survey$Q22 == "advanced", na.rm = TRUE) / n, 
-              sum(survey$Q22 == "fluent / native", na.rm = TRUE) / n)
-) %>% 
-    mutate(pos = cumsum(ratio)- ratio / 2)
-ggplot(data = q22Stats) + 
-    geom_bar(aes(x = factor(1), 
-                 y = ratio, 
-                 fill = factor(status)), 
-             stat = "identity", 
-             width = 1) + 
-    scale_fill_brewer(palette = "Set1") + 
-    geom_text(aes(x = factor(1), 
-                  y = pos, 
-                  label = paste0(round(ratio * 100, 0), "%")), 
-              size = 8, 
-              color = "white") + 
-    coord_polar(theta="y") + 
-    labs(list(x = "", 
-              y = "", 
-              fill = paste0("n = ", n))) + 
-    theme_bw(base_size = 25) + 
-    theme(plot.background = element_rect(fill = "transparent", 
-                                         color = NA), 
-          panel.border = element_blank(), 
-          panel.grid.major = element_blank(), 
-          axis.line = element_blank(), 
-          axis.text.x = element_blank(), 
-          axis.text.y = element_blank(), 
-          axis.ticks = element_blank(), 
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
-```
-
---- .class #id
-
-## Survey - My other language skills
-
-```{r surveyQ23, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-## Q23: My other language skills
-n <- sum(!is.na(survey$Q23))
-## multiple choices have to be accounted for
-q23Stats <- unlist(strsplit(data$Q23, split=", ")) %>% 
-    table() %>% 
-    as.data.frame()
-names(q23Stats) <- c("status", "count")
-q23Stats$status <- factor(q23Stats$status, 
-                          levels = q23Stats$status)
-ggplot(data = q23Stats) + 
-    geom_bar(aes(x = reorder(status, count), 
-                 y = count, 
-                 fill = factor(status)), 
-             stat = "identity") + 
-    labs(list(x = "", 
-              y = "", 
-              fill = paste0("n = ", n))) + 
-    coord_flip() + 
-    theme_bw(base_size = 25) + 
-    theme(plot.background = element_rect(fill = "transparent", 
-                                         color = NA), 
-          panel.border = element_blank(), 
-          panel.grid.major = element_blank(), 
-          axis.ticks.y = element_blank(), 
           axis.title.y = element_blank(), 
-          legend.position="none")
+          legend.key.size = unit(2, "lines"))
 ```
-
---- .class #id
-
-## Survey - I have been living in Berlin ...
-
-```{r surveyQ24, echo = FALSE, dpi = 72, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-## Q24: I have been living in Berlin ...
-n <- sum(!is.na(survey$Q24))
-q24Stats <- data.frame(
-    status = factor(c("... since I was born", 
-                      "... more than five years now", 
-                      "... less than five but more than a year now", 
-                      "... less than a year", 
-                      "... I only just arrived", 
-                      "Other"), 
-                    levels = c("... since I was born", 
-                               "... more than five years now", 
-                               "... less than five but more than a year now", 
-                               "... less than a year", 
-                               "... I only just arrived", 
-                               "Other")), 
-    ratio = c(sum(survey$Q24 == "... since I was born", na.rm = TRUE) / n, 
-              sum(survey$Q24 == "... more than five years now", na.rm = TRUE) / n, 
-              sum(survey$Q24 == "... less than five but more than a year now", na.rm = TRUE) / n, 
-              sum(survey$Q24 == "... less than a year", na.rm = TRUE) / n, 
-              sum(survey$Q24 == "... I only just arrived", na.rm = TRUE) / n, 
-              sum(survey$Q24 == "Other", na.rm = TRUE) / n)
-) %>% 
-    mutate(pos = cumsum(ratio)- ratio / 2)
-ggplot(data = q24Stats) + 
-    geom_bar(aes(x = factor(1), 
-                 y = ratio, 
-                 fill = factor(status)), 
-             stat = "identity", 
-             width = 1) + 
-    scale_fill_brewer(palette = "Set1") + 
-    geom_text(aes(x = factor(1), 
-                  y = pos, 
-                  label = paste0(round(ratio * 100, 0), "%")), 
-              size = 8, 
-              color = "white") + 
-    coord_polar(theta="y") + 
-    labs(list(x = "", 
-              y = "", 
-              fill = paste0("n = ", n))) + 
-    theme_bw(base_size = 25) + 
-    theme(plot.background = element_rect(fill = "transparent", 
-                                         color = NA), 
-          panel.border = element_blank(), 
-          panel.grid.major = element_blank(), 
-          axis.line = element_blank(), 
-          axis.text.x = element_blank(), 
-          axis.text.y = element_blank(), 
-          axis.ticks = element_blank(), 
-          axis.title.x = element_blank(), 
-          axis.title.y = element_blank())
-```
-
---- .class #id
-
-## You are the group - the group is you!
-##### (image credit: [Peter O'Connor aka anemoneprojectors on Flickr](https://flic.kr/p/9GEQsk))
-
-```{r groupImage, echo = FALSE, message = FALSE, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-jpegUrl <- "https://farm3.staticflickr.com/2588/5711091239_edae823037_o_d.jpg"
-tf <- tempfile()
-download.file(jpegUrl, 
-              tf, 
-              method = "curl")
-img <- readJPEG(tf)
-grid.raster(img)
-invisible(file.remove(tf))
-```
-
---- .class #id 
-
-## Start
-##### (image credit: [Dirk Vorderstraße on Flickr](https://flic.kr/p/h8fWVM))
-
-```{r startImage, echo = FALSE, message = FALSE, fig.width = 14, fig.height = 7, fit.align = "center", dev.args = list(bg = 'transparent')}
-jpegUrl <- "https://farm4.staticflickr.com/3698/10583840103_c656504a75_b_d.jpg"
-tf <- tempfile()
-download.file(jpegUrl, 
-              tf, 
-              method = "curl")
-img <- readJPEG(tf)
-grid.raster(img)
-invisible(file.remove(tf))
-```
-
---- .class #id 
-
-## Contact
-
-* Group website on Meetup.com: [http://www.meetup.com/Berlin-R-Users-Group/](http://www.meetup.com/Berlin-R-Users-Group/)
-* Twitter: [@BerlinRUG](https://twitter.com/berlinrug)
-* Konstantin: [@kogreger](https://twitter.com/kogreger) or [kogreger@gmail.com](mailto:kogreger@gmail.com)
-
---- .class #id 
-
-## Schedule for today
-
-Time|What's happening
--------|-------
-19:00|doors open
-19:30|Konstantin Greger ([@kogreger](https://twitter.com/kogreger)): "Welcome address and brief group introduction"
-~19:45|Berry Boessenkool (Universität Potsdam, [@berryboessenkoo](https://twitter.com/berryboessenkoo)): "Why you need an umbrella on hot days - R application in hydrometeorological data analysis""
-~20:15|Daniel Kirsch ([@kirel](https://twitter.com/kirel)): "Analyzing children's relay times for fun and... gold medals""
-afterwards|socializing & networking
-22:00|doors close
