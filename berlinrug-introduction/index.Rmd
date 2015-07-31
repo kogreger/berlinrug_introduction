@@ -167,7 +167,7 @@ ggplot(data = memberStats) +
 ## attendance stats
 ## (unfortunately the number of attendees needs to be entered and updated 
 ##  manually)
-attendees <- 97
+attendees <- 92
 totalMembers <- memberStats %>% 
     filter(status == "total") %>% 
     arrange(desc(date)) %>% 

@@ -51,7 +51,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: meetup.com, current number of group members = ``177``)
+#### (Source: meetup.com, current number of group members = ``184``)
 
 ![plot of chunk attendanceStatsB](assets/fig/attendanceStatsB-1.png) 
 
@@ -61,7 +61,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ05B](assets/fig/surveyQ05B-1.png) 
 
@@ -71,7 +71,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``33``)
+#### (Source: BerlinRUG member survey, n = ``34``)
 
 ![plot of chunk surveyQ07B](assets/fig/surveyQ07B-1.png) 
 
@@ -81,7 +81,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``31``)
+#### (Source: BerlinRUG member survey, n = ``32``)
 
 ![plot of chunk surveyQ09B](assets/fig/surveyQ09B-1.png) 
 
@@ -91,7 +91,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``30``)
+#### (Source: BerlinRUG member survey, n = ``31``)
 
 ![plot of chunk surveyQ10B](assets/fig/surveyQ10B-1.png) 
 
@@ -111,7 +111,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``33``)
+#### (Source: BerlinRUG member survey, n = ``34``)
 
 ![plot of chunk surveyQ12B](assets/fig/surveyQ12B-1.png) 
 
@@ -121,7 +121,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``31``)
+#### (Source: BerlinRUG member survey, n = ``32``)
 
 ![plot of chunk surveyQ13B](assets/fig/surveyQ13B-1.png) 
 
@@ -131,7 +131,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ06B](assets/fig/surveyQ06B-1.png) 
 
@@ -141,7 +141,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ21B](assets/fig/surveyQ21B-1.png) 
 
@@ -151,7 +151,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ20B](assets/fig/surveyQ20B-1.png) 
 
@@ -161,7 +161,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``33``)
+#### (Source: BerlinRUG member survey, n = ``34``)
 
 ![plot of chunk surveyQ03B](assets/fig/surveyQ03B-1.png) 
 
@@ -171,7 +171,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ02B](assets/fig/surveyQ02B-1.png) 
 
@@ -181,7 +181,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ19B](assets/fig/surveyQ19B-1.png) 
 
@@ -191,7 +191,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``33``)
+#### (Source: BerlinRUG member survey, n = ``34``)
 
 ![plot of chunk surveyQ22B](assets/fig/surveyQ22B-1.png) 
 
@@ -201,7 +201,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``31``)
+#### (Source: BerlinRUG member survey, n = ``32``)
 
 ![plot of chunk surveyQ23B](assets/fig/surveyQ23B-1.png) 
 
@@ -211,7 +211,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ24B](assets/fig/surveyQ24B-1.png) 
 
@@ -262,7 +262,7 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ17B](assets/fig/surveyQ17B-1.png) 
 
@@ -272,6 +272,6 @@ afterwards|socializing & networking
 
 
 
-#### (Source: BerlinRUG member survey, n = ``34``)
+#### (Source: BerlinRUG member survey, n = ``35``)
 
 ![plot of chunk surveyQ18B](assets/fig/surveyQ18B-1.png) 
